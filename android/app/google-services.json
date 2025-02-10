@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "375911628428",
+    "project_id": "voting-automation18",
+    "storage_bucket": "voting-automation18.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375911628428:android:fb99d67f6d4d72dae345a9",
+        "android_client_info": {
+          "package_name": "com.example.voting_automation18"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuCOJsTlQxiTFVNxaKhoRgfC8wgXPhqs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375911628428:android:1b50081e00dbce03e345a9",
+        "android_client_info": {
+          "package_name": "com.yourcompany.voting_automation18"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuCOJsTlQxiTFVNxaKhoRgfC8wgXPhqs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'screens/registration_screen.dart'; // Correct import path
+import 'screens/login_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});  // ✅ Added super.key
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,8 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Voting Automation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true,  // ✅ Optional: Enable Material 3 for modern UI
       ),
-      home: RegistrationScreen(),
+      home: const LoginScreen(),  // ✅ Use const for performance
     );
   }
 }

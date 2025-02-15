@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:voting_automation18/screens/login_screen.dart'; // 🔹 Correct Import
+import 'package:voting_automation18/main.dart';
+import 'test_helper.dart'; // Import the test helper file
 
 void main() {
-  testWidgets('Login screen UI test', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+  setUpAll(() async {
+    await setupFirebaseAuthMocks(); // ✅ Mock Firebase before tests
+  });
 
-
-    // ✅ Verify TextFields Exist
-    expect(find.byKey(const Key('emailField')), findsOneWidget);
-    expect(find.byKey(const Key('passwordField')), findsOneWidget);
-
-    // ✅ Verify Login Button Exists
-    expect(find.byKey(const Key('loginButton')), findsOneWidget);
+  testWidgets('App launches without crashing', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+    expect(find.text('Voting Automation'), findsOneWidget);
   });
 }

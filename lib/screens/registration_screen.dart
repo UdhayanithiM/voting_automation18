@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
+import 'package:voting_automation18/services/api_service.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -12,17 +12,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final ApiService apiService = ApiService();
 
-  @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  Future<void> register() async {
-    String response = await ApiService.registerUser(
+  Future<void> registerUser() async {
+    String response = await apiService.registerUser(
       nameController.text.trim(),
       emailController.text.trim(),
       passwordController.text.trim(),
@@ -38,13 +31,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(controller: nameController, decoration: const InputDecoration(labelText: "Name")),
             TextField(controller: emailController, decoration: const InputDecoration(labelText: "Email")),
             TextField(controller: passwordController, decoration: const InputDecoration(labelText: "Password"), obscureText: true),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: register, child: const Text("Register")),
+            ElevatedButton(onPressed: registerUser, child: const Text("Register")),
           ],
         ),
       ),

@@ -1,36 +1,44 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../api_config.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ApiService {
-  static Future<String> registerUser(String name, String email, String password) async {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  // ✅ Register User with Firebase Authentication
+  Future<String> registerUser(String name, String email, String password) async {
     try {
-      final url = Uri.parse("$baseUrl/api/users/register");
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name, "email": email, "password": password}),
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      final responseData = jsonDecode(response.body);
-      return response.statusCode == 201 ? "✅ Registration successful!" : "❌ ${responseData['error']}";
-    } catch (e) {
-      return "⚠️ Failed to connect to server.";
+      // Store additional user info in Firestore
+      await _db.collection("users").doc(userCredential.user!.uid).set({
+        "name": name,
+        "email": email,
+        "createdAt": FieldValue.serverTimestamp(),
+      });
+
+      return "✅ Registration successful!";
+    } on FirebaseAuthException catch (e) {
+      return "❌ Registration failed: ${e.message}";
     }
   }
 
-  static Future<Map<String, dynamic>> login(String email, String password) async {
+  // ✅ Login User with Firebase Authentication
+  Future<bool> loginUser(String email, String password) async {
     try {
-      final url = Uri.parse("$baseUrl/api/users/login");
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"email": email, "password": password}),
-      );
-
-      return response.statusCode == 200 ? jsonDecode(response.body) : {"error": "Invalid login credentials"};
-    } catch (e) {
-      return {"error": "⚠️ Failed to connect to server. Check API URL."};
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print("❌ Login error: ${e.message}");
+      return false;
     }
+  }
+
+  // ✅ Logout User
+  Future<void> logoutUser() async {
+    await _auth.signOut();
   }
 }

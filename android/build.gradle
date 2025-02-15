@@ -1,3 +1,10 @@
+// Top-level Gradle build file where you can add global configurations
+
+plugins {
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services") version "4.4.2" apply false
+}
+
 allprojects {
     repositories {
         google()
@@ -13,6 +20,6 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

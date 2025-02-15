@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <string>NO</string>
+
+	<key>API_KEY</key>
+	<string>AIzaSyDC_mWDnXY5Uv8tqEC9HUp8KagzeZxM6w4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>918932427902</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>voting1.app</string>
+	<key>PROJECT_ID</key>
+	<string>premium-portal-451012-c0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>premium-portal-451012-c0.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:918932427902:ios:3c75d73e07699c7c17b42f</string>
+</dict>
+</plist>

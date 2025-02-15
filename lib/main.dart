@@ -6,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});  // ✅ Added super.key
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Voting Automation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        useMaterial3: true,  // ✅ Optional: Enable Material 3 for modern UI
+        useMaterial3: true,
       ),
-      home: const LoginScreen(),  // ✅ Use const for performance
+      home: const LoginScreen(),
     );
   }
 }

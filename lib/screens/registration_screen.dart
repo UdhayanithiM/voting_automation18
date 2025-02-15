@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../api_config.dart';
+import '../services/api_service.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void registerUser(BuildContext context) async {
-    final url = Uri.parse('$apiBaseUrl/register');
-    final response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        'name': nameController.text,
-        'email': emailController.text,
-        'password': passwordController.text,
-      }),
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> register() async {
+    String response = await ApiService.registerUser(
+      nameController.text.trim(),
+      emailController.text.trim(),
+      passwordController.text.trim(),
     );
 
-    if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Registration successful!")));
-      Navigator.pop(context);
-    } else {
-      final data = json.decode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${data['message']}")));
-    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response)));
   }
 
   @override
@@ -42,7 +44,7 @@ class RegistrationScreen extends StatelessWidget {
             TextField(controller: emailController, decoration: const InputDecoration(labelText: "Email")),
             TextField(controller: passwordController, decoration: const InputDecoration(labelText: "Password"), obscureText: true),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: () => registerUser(context), child: const Text("Register")),
+            ElevatedButton(onPressed: register, child: const Text("Register")),
           ],
         ),
       ),

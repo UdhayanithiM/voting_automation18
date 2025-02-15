@@ -1,32 +1,36 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../api_config.dart';
 
 class ApiService {
-  // 🔹 UPDATE BASE URL BASED ON YOUR ENVIRONMENT
-  static const String baseUrl = "http://192.168.1.5:3000"; // Replace with your local/ngrok URL
-
-  // 🔹 LOGIN FUNCTION
-  static Future<Map<String, dynamic>> login(String email, String password) async {
-    final url = Uri.parse("$baseUrl/api/login");
-
+  static Future<String> registerUser(String name, String email, String password) async {
     try {
+      final url = Uri.parse("$baseUrl/api/users/register");
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"name": name, "email": email, "password": password}),
+      );
+
+      final responseData = jsonDecode(response.body);
+      return response.statusCode == 201 ? "✅ Registration successful!" : "❌ ${responseData['error']}";
+    } catch (e) {
+      return "⚠️ Failed to connect to server.";
+    }
+  }
+
+  static Future<Map<String, dynamic>> login(String email, String password) async {
+    try {
+      final url = Uri.parse("$baseUrl/api/users/login");
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "password": password}),
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print("✅ Login Success: ${data['message']}");
-        return data;
-      } else {
-        print("❌ Error ${response.statusCode}: ${response.body}");
-        return {"error": "Login failed"};
-      }
+      return response.statusCode == 200 ? jsonDecode(response.body) : {"error": "Invalid login credentials"};
     } catch (e) {
-      print("🚨 Exception: $e");
-      return {"error": "Something went wrong"};
+      return {"error": "⚠️ Failed to connect to server. Check API URL."};
     }
   }
 }

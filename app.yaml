@@ -1,0 +1,7 @@
+runtime: python39  # App Engine needs a runtime (even if it's Flutter)
+env: standard
+
+handlers:
+  - url: /.*
+    static_files: build/web/index.html
+    upload: build/web/index.html
